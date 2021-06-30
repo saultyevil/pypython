@@ -8,7 +8,6 @@ spectrum.
 """
 
 import numpy as np
-import pandas as pd
 
 from pypython.constants import (MPROT, MSOL, MSOL_PER_YEAR, PI, STEFAN_BOLTZMANN, THOMPSON, C, G)
 from pypython.physics.blackbody import planck_lambda, planck_nu
@@ -88,10 +87,8 @@ def create_disc_spectrum(m_co, mdot, r_in, r_out, freq_min, freq_max, freq_units
 
     radii_range = np.logspace(np.log10(r_in), np.log10(r_out), n_rings)
     frequency_range = np.linspace(freq_min, freq_max, n_freq)
-    s = pd.DataFrame(columns=[xlabel, "Lum."])
 
-    # Initialise the data frame
-    s[xlabel] = frequency_range
+    spectrum = {xlabel: frequency_range}
     lum = np.zeros_like(frequency_range)
 
     # TODO: this can probably be vectorised to be faster
@@ -110,9 +107,9 @@ def create_disc_spectrum(m_co, mdot, r_in, r_out, freq_min, freq_max, freq_units
 
         lum += f * area_annulus * PI
 
-    s["Lum."] = lum
+    spectrum["Lum."] = lum
 
-    return s
+    return spectrum
 
 
 def eddington_accretion_limit(mbh, efficiency):

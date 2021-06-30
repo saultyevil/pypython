@@ -8,3 +8,5 @@ various physical processes remove, i.e. resonance scattering. This
 module also includes functions for measuring line width and equivalent
 widths.
 """
+
+from pypython.spectrum import create, lines

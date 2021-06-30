@@ -11,6 +11,8 @@ import re
 from copy import copy
 from glob import glob
 
+from pypython.simulation import atomicdata, grid
+
 
 def check_model_convergence(root, fp=".", return_per_cycle=False, return_converging=False):
     """Check the convergence of a Python simulation by parsing the.

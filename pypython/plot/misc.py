@@ -34,7 +34,6 @@ def plot_spectrum_physics_process_contributions(contribution_spectra,
         The plt.Figure object for the created figure
     ax: plt.Axes
         The plt.Axes object for the created figure"""
-
     normalize_figure_style()
 
     fig, ax = plt.subplots(figsize=(12, 8))

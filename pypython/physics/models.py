@@ -7,7 +7,7 @@ Models used in the PYTHON collaboration, including:
 """
 
 import numpy as np
-from scipy.optimize import brentq
+# from scipy.optimize import brentq
 
 from pypython.constants import MSOL, MSOL_PER_YEAR, G
 
@@ -80,29 +80,29 @@ class SV93Wind:
 
         return rho_guess - rho  # We want to make this zero
 
-    def find_r0(self, x):
-        """Determine r0 for a point in the x, y plane."""
-
-        # If the vector is in the x-y plane, then this is simple
-        if x[2] == 0:
-            return np.sqrt(x[0]**2 + x[1]**2)
-
-        # For when the vector is not solely in the x-y plane
-        rho_min = self.r_min + x[2] * np.tan(self.theta_min)
-        rho_max = self.r_max + x[2] * np.tan(self.theta_max)
-        rho = np.sqrt(x[0]**2 + x[1]**2)
-
-        if rho <= rho_min:
-            return self.r_min * rho / rho_min
-        elif rho >= rho_max:
-            return self.r_max * rho - rho_max
-        else:
-            return brentq(
-                self.r0_guess_func,
-                self.r_min,
-                self.r_max,
-                args=x,
-            )
+    # def find_r0(self, x):
+    #     """Determine r0 for a point in the x, y plane."""
+    #
+    #     # If the vector is in the x-y plane, then this is simple
+    #     if x[2] == 0:
+    #         return np.sqrt(x[0]**2 + x[1]**2)
+    #
+    #     # For when the vector is not solely in the x-y plane
+    #     rho_min = self.r_min + x[2] * np.tan(self.theta_min)
+    #     rho_max = self.r_max + x[2] * np.tan(self.theta_max)
+    #     rho = np.sqrt(x[0]**2 + x[1]**2)
+    #
+    #     if rho <= rho_min:
+    #         return self.r_min * rho / rho_min
+    #     elif rho >= rho_max:
+    #         return self.r_max * rho - rho_max
+    #     else:
+    #         return brentq(
+    #             self.r0_guess_func,
+    #             self.r_min,
+    #             self.r_max,
+    #             args=x,
+    #         )
 
     def escape_velocity(self, r0):
         """Calculate the escape velocity at a point r0."""
@@ -118,21 +118,21 @@ class SV93Wind:
 
         return vl
 
-    def velocity_vector(self, x):
-        """Determine the 3d velocity vector in cartesian coordinates."""
-        r0 = self.find_r0(x)
-        theta = self.find_theta(r0)
-
-        r = np.sqrt(x[0]**2 + x[1]**2)
-        pol_dist = np.sqrt((r - r0)**2 + x[2]**2)
-        vl = self.polodial_velocity(pol_dist, r0)
-
-        v = np.zeros(3)
-        v[0] = vl * np.sin(theta)
-        if r > 0:
-            v[1] = np.sqrt(G * self.m_co * r0) / r
-        else:
-            v[1] = 0
-        v[2] = np.abs(vl * np.cos(theta))
-
-        return v
+    # def velocity_vector(self, x):
+    #     """Determine the 3d velocity vector in cartesian coordinates."""
+    #     r0 = self.find_r0(x)
+    #     theta = self.find_theta(r0)
+    #
+    #     r = np.sqrt(x[0]**2 + x[1]**2)
+    #     pol_dist = np.sqrt((r - r0)**2 + x[2]**2)
+    #     vl = self.polodial_velocity(pol_dist, r0)
+    #
+    #     v = np.zeros(3)
+    #     v[0] = vl * np.sin(theta)
+    #     if r > 0:
+    #         v[1] = np.sqrt(G * self.m_co * r0) / r
+    #     else:
+    #         v[1] = 0
+    #     v[2] = np.abs(vl * np.cos(theta))
+    #
+    #     return v

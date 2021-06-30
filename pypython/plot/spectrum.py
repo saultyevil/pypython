@@ -4,11 +4,10 @@
 import numpy as np
 from matplotlib import pyplot as plt
 
-import pypython
 from pypython import (SPECTRUM_UNITS_FLM, SPECTRUM_UNITS_FNU, SPECTRUM_UNITS_LNU, Spectrum, get_root_name)
 from pypython.constants import ANGSTROM, C
-from pypython.plot import (_check_axes_scale_string, finish_figure, get_xy_subset, normalize_figure_style,
-                           remove_extra_axes, set_axes_scales, subplot_dims)
+from pypython.plot import (finish_figure, get_xy_subset, normalize_figure_style, remove_extra_axes, set_axes_scales,
+                           subplot_dims)
 
 MIN_SPEC_COMP_FLUX = 1e-15
 
@@ -505,7 +504,6 @@ def reprocessing(spectrum, xmin=None, xmax=None, scale="loglog", label_edges=Tru
     if "spec" not in spectrum.avail_spectrum and "log_spec" not in spectrum.avail_spectrum:
         raise ValueError("There is no observer spectrum so cannot create this plot")
 
-    _check_axes_scale_string(scale)
     normalize_figure_style()
     fig, ax = plt.subplots(figsize=(12, 7))
     ax2 = ax.twinx()
@@ -761,7 +759,6 @@ def multiple_models(output_name,
         matplotlib Axes object.
     """
     normalize_figure_style()
-    _check_axes_scale_string(scale)
 
     if type(spectra) is str:
         spectra = list(spectra)

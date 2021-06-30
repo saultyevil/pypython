@@ -7,7 +7,6 @@ comes out of a Python simulation.
 """
 
 import copy
-import pkgutil
 import re
 import textwrap
 import time
@@ -2325,32 +2324,24 @@ class Wind:
         return textwrap.dedent(txt)
 
 
-# Load in all the submodules ---------------------------------------------------
-
-__all__ = []
-for loader, module_name, is_pkg in pkgutil.walk_packages(__path__):
-    __all__.append(module_name)
-    _module = loader.find_module(module_name).load_module(module_name)
-    globals()[module_name] = _module
-
-__all__.append("check_sorted_array_ascending")
-__all__.append("cleanup_data")
-__all__.append("create_wind_save_tables")
-__all__.append("find")
-__all__.append("get_array_index")
-__all__.append("get_python_version")
-__all__.append("get_root_name")
-__all__.append("smooth_array")
-__all__.append("run_py_optical_depth")
-__all__.append("run_py_wind")
-__all__.append("CellSpectra")
-__all__.append("ModelledCellSpectra")
-__all__.append("Spectrum")
-__all__.append("Wind")
-
 # These are put here to solve a circular dependency ----------------------------
+
+import pypython.math
+import pypython.spectrum
+import pypython.physics
+import pypython.plot
+import pypython.util
 
 from pypython.plot import normalize_figure_style, set_axes_scales
 from pypython.plot.spectrum import add_line_ids, common_lines
 from pypython.plot.wind import plot_1d_wind, plot_2d_wind
 from pypython.util import run_command
+
+
+# Create the __all__ list of modules -------------------------------------------
+
+# __all__ = [
+#     "math", "physics", "plot", "simulation", "spectrum", "util", "constants", "error", "check_sorted_array_ascending",
+#     "cleanup_data", "create_wind_save_tables", "find", "get_array_index", "get_python_version", "get_root_name",
+#     "smooth_array", "run_py_optical_depth", "run_py_wind", "CellSpectra", "ModelledCellSpectra", "Spectrum", "Wind"
+# ]
